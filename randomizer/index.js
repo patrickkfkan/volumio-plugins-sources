@@ -2,30 +2,22 @@
 
 var libQ = require('kew');
 var fs=require('fs-extra');
-var config = new (require('v-conf'))();
-var exec = require('child_process').exec;
-var execSync = require('child_process').execSync;
 var io = require('socket.io-client');
-var musicLib = 0;
-var position = 0;
 var tidyuri = "";
-var tracks = null;
+
 module.exports = randomizer;
+
 function randomizer(context) {
-	var self = this;
 	this.context = context;
 	this.commandRouter = this.context.coreCommand;
 	this.logger = this.context.logger;
 	this.configManager = this.context.configManager;
 }
 
-randomizer.prototype.onVolumioStart = function()
-{
-    var self = this;
+randomizer.prototype.onVolumioStart = function() {
     var configFile=this.commandRouter.pluginManager.getConfigurationFile(this.context,'config.json');
     this.config = new (require('v-conf'))();
     this.config.loadFile(configFile);
-
     return libQ.resolve();
 }
 
@@ -60,7 +52,6 @@ randomizer.prototype.randomTracks = function() {
     var defer=libQ.defer();
     var i = 0;
     var queue = 0;
-    var list = 0; 
     self.tracks = self.config.get('tracks');
     if (isNaN(self.tracks)) self.tracks = 25;
     self.socket.emit('browseLibrary', {'uri':'albums://'});
@@ -205,7 +196,6 @@ randomizer.prototype.randomAlbum = function() {
 randomizer.prototype.truePrevious = function() {
      var self = this;
      var defer=libQ.defer();
-     var position = 0;
      self.socket.emit('getState', '');
      self.socket.on('pushState', function (data) {
      if (data.position >= 1)
@@ -236,11 +226,6 @@ randomizer.prototype.onStop = function() {
     defer.resolve();
 
     return libQ.resolve();
-};
-
-randomizer.prototype.onRestart = function() {
-    var self = this;
-    // Optional, use if you need it
 };
 
 randomizer.prototype.saveSettings = function (data) {
@@ -310,21 +295,6 @@ randomizer.prototype.getI18nString = function (key) {
 randomizer.prototype.getConfigurationFiles = function() {
 	return ['config.json'];
 }
-
-randomizer.prototype.setUIConfig = function(data) {
-	var self = this;
-	//Perform your installation tasks here
-};
-
-randomizer.prototype.getConf = function(varName) {
-	var self = this;
-	//Perform your installation tasks here
-};
-
-randomizer.prototype.setConf = function(varName, varValue) {
-	var self = this;
-	//Perform your installation tasks here
-};
 
 randomizer.prototype.handleBrowseUri = function(uri) {
   
