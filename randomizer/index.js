@@ -335,17 +335,17 @@ randomizer.prototype.handleBrowseUri = function(uri) {
             {
               service: 'randomizer',
               type: 'item-no-menu',
-              title: this.getI18nString('TRACKTOALBUM_LBL'),
-              uri: `randomizer/trackToAlbum`,
-              albumart: '/albumart?sourceicon=user_interface/randomizer/assets/track_to_album.png'
-            },
-            {
-              service: 'randomizer',
-              type: 'item-no-menu',
               title: this.getI18nString('RANDOMALBUM_LBL'),
               uri: `randomizer/randomAlbum`,
               albumart: '/albumart?sourceicon=user_interface/randomizer/assets/random_album.png'
             },
+            {
+              service: 'randomizer',
+              type: 'item-no-menu',
+              title: this.getI18nString('TRACKTOALBUM_LBL'),
+              uri: `randomizer/trackToAlbum`,
+              albumart: '/albumart?sourceicon=user_interface/randomizer/assets/track_to_album.png'
+            }
           ]
         }
       ]
